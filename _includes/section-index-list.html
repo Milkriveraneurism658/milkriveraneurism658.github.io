@@ -1,0 +1,37 @@
+{% comment %}
+  section_dir: 경로 접두 (예: 'projects/', 'notes/')
+  section_sort: 'order' (기본) 또는 'date' (최신순)
+{% endcomment %}
+{% assign section_articles = site.pages | where_exp: "p", "p.path contains section_dir" | where_exp: "p", "p.name != 'index.md'" %}
+{% if section_sort == "date" %}
+  {% assign section_articles = section_articles | sort: "date" | reverse %}
+{% else %}
+  {% assign section_articles = section_articles | sort: "order" %}
+{% endif %}
+
+{% if section_articles.size > 0 %}
+<ul class="post-list">
+  {% for item in section_articles %}
+  <li>
+    {% if item.date %}
+    <span class="post-meta">
+      <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%Y-%m-%d' }}</time>
+      {% if item.role %}
+      · {{ item.role }}
+      {% endif %}
+    </span>
+    {% elsif item.role %}
+    <span class="post-meta">{{ item.role }}</span>
+    {% endif %}
+    <h3>
+      <a class="post-link" href="{{ item.url | relative_url }}">{{ item.title | escape }}</a>
+    </h3>
+    {% if item.excerpt %}
+    <p>{{ item.excerpt | strip_html | strip }}</p>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p><em>아직 게시된 항목이 없습니다.</em></p>
+{% endif %}

@@ -20,7 +20,10 @@
 - 커밋 제목·본문: 한글 (`docs/project-rules.md`)
 - 사이트 콘텐츠와 docs/설정은 커밋 분리
 - `career` · `projects` · `notes` 페이지: `date`, `excerpt` 필수. `title` 짧게, 부제(`—`) 금지. `excerpt` = 본문 lead
+- `projects/` · `notes/` 목록은 `_includes/section-index-list.html`로 자동 생성 (`index.md` 제외)
+- `projects` 상세: 목록용 `order`(작을수록 앞), `role` 권장
 - 요청 없이 커밋·push 하지 않음
+
 
 ## 빌드
 
