@@ -22,10 +22,11 @@
 
 - 소문자 · kebab-case · ASCII만
 - Steam 해시·해상도 접미사(`.1920x1080` 등) 금지
-- 대표: `cover.jpg` (또는 `cover.webp`)
+- 대표: `cover.jpg` (또는 `cover.webp`) — projects 목록 썸네일
 - 스크린샷: `ss-01.jpg`, `ss-02.jpg`, … (두 자리 번호, 표시 순서)
 - 설명형 이름이 필요하면 `combat-01.jpg`처럼 역할 + 번호
 - 폴더에 실제 이미지가 있으면 `.gitkeep` 제거
+- 목록 썸네일: `cover.*` 우선, 없으면 첫 `ss-*` (`section-index-list`, projects만)
 - 캐러셀: `{% include screenshot-carousel.html slug="<슬러그>" %}` — `ss-*`를 이름순으로 Steam식 미리보기
 
 ## 규칙 추가
