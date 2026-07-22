@@ -1,0 +1,24 @@
+title: monet5379
+description: 채용 · 포트폴리오 · 공개 기술
+url: "https://monet5379.github.io"
+baseurl: ""
+timezone: Asia/Seoul
+
+markdown: kramdown
+theme: minima
+
+exclude:
+  - docs
+  - AGENTS.md
+  - vendor
+  - README.md
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+header_pages:
+  - index.md
+  - career.md
+  - projects/index.md
+  - notes/index.md
