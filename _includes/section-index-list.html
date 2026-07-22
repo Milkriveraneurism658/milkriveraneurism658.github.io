@@ -1,6 +1,8 @@
 {% comment %}
   section_dir: 경로 접두 (예: 'projects/', 'notes/')
   section_sort: 'order' (기본) 또는 'date' (최신순)
+  show_tag_filter: true면 태그 필터 UI (notes)
+  filter_tags: 필터에 노출할 태그 배열 (예: "DragonIsDead|BladeAssault" | split: "|")
 {% endcomment %}
 {% assign section_articles = site.pages | where_exp: "p", "p.path contains section_dir" | where_exp: "p", "p.name != 'index.md'" %}
 {% if section_sort == "date" %}
@@ -9,29 +11,90 @@
   {% assign section_articles = section_articles | sort: "order" %}
 {% endif %}
 
+{% assign show_thumbs = false %}
+{% if section_dir == "projects/" %}
+  {% assign show_thumbs = true %}
+{% endif %}
+
+{% if show_tag_filter and filter_tags.size > 0 %}
+<nav class="tag-filter" data-tag-filter aria-label="태그 필터">
+  <span class="tag-filter__label">Tag:</span>
+  <button type="button" class="tag-filter__btn is-active" data-tag="" aria-pressed="true">All</button>
+  {% for tag in filter_tags %}
+  <button type="button" class="tag-filter__btn" data-tag="{{ tag | escape }}" aria-pressed="false">{{ tag | escape }}</button>
+  {% endfor %}
+</nav>
+{% endif %}
+
 {% if section_articles.size > 0 %}
-<ul class="post-list">
+<ul class="post-list{% if show_thumbs %} post-list--thumbs{% endif %}"{% if show_tag_filter %} data-tag-filter-list{% endif %}>
   {% for item in section_articles %}
-  <li>
-    {% if item.date %}
-    <span class="post-meta">
-      <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%Y-%m-%d' }}</time>
-      {% if item.role %}
-      · {{ item.role }}
+  {% assign thumb = false %}
+  {% if show_thumbs %}
+    {% assign item_slug = item.path | split: "/" | last | remove: ".md" %}
+    {% assign thumb_dir = "assets/images/projects/" | append: item_slug | append: "/" %}
+    {% assign covers = site.static_files
+      | where_exp: "f", "f.path contains thumb_dir"
+      | where_exp: "f", "f.name contains 'cover.'"
+      | sort: "name" %}
+    {% if covers.size > 0 %}
+      {% assign thumb = covers | first %}
+    {% else %}
+      {% assign shots = site.static_files
+        | where_exp: "f", "f.path contains thumb_dir"
+        | where_exp: "f", "f.name contains 'ss-'"
+        | sort: "name" %}
+      {% if shots.size > 0 %}
+        {% assign thumb = shots | first %}
       {% endif %}
-    </span>
-    {% elsif item.role %}
-    <span class="post-meta">{{ item.role }}</span>
     {% endif %}
-    <h3>
-      <a class="post-link" href="{{ item.url | relative_url }}">{{ item.title | escape }}</a>
-    </h3>
-    {% if item.excerpt %}
-    <p>{{ item.excerpt | strip_html | strip }}</p>
+  {% endif %}
+  <li{% if thumb %} class="post-list__item--has-thumb"{% endif %}{% if item.tags %} data-tags='{{ item.tags | jsonify | escape }}'{% endif %}>
+    {% if thumb %}
+    <a class="post-list__thumb" href="{{ item.url | relative_url }}" tabindex="-1" aria-hidden="true">
+      <img
+        src="{{ thumb.path | relative_url }}"
+        alt=""
+        width="320"
+        height="180"
+        loading="lazy"
+        decoding="async">
+    </a>
     {% endif %}
+    <div class="post-list__body">
+      {% if item.date %}
+      <span class="post-meta">
+        <time datetime="{{ item.date | date: '%Y-%m-%d' }}">{{ item.date | date: '%Y-%m-%d' }}</time>
+        {% if item.role %}
+        · {{ item.role }}
+        {% endif %}
+      </span>
+      {% elsif item.role %}
+      <span class="post-meta">{{ item.role }}</span>
+      {% endif %}
+      <h3>
+        <a class="post-link" href="{{ item.url | relative_url }}">{{ item.title | escape }}</a>
+      </h3>
+      {% if item.excerpt %}
+      <p>{{ item.excerpt | strip_html | strip }}</p>
+      {% endif %}
+      {% if item.tags and item.tags.size > 0 %}
+      <div class="post-list__tags">
+        <span class="post-list__tags-label">Tag:</span>
+        <ul aria-label="태그">
+          {% for tag in item.tags %}
+          <li>{{ tag | escape }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
   </li>
   {% endfor %}
 </ul>
+{% if show_tag_filter %}
+<p class="tag-filter__empty" data-tag-filter-empty hidden>해당 태그의 글이 없습니다.</p>
+{% endif %}
 {% else %}
 <p><em>아직 게시된 항목이 없습니다.</em></p>
 {% endif %}
