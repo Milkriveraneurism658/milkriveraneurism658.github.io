@@ -5,10 +5,11 @@ title: Home
 
 ## 소개
 
-**monet5379** — 게임 / Unity 엔지니어링.
+**monet5379** — Unity 클라이언트 / 게임플레이 엔지니어.
 
-채용·협업을 위한 경력과 포트폴리오, 그리고 공개 기술 노트를 모아 둡니다.  
-스튜디오 기술 글은 [Intem Studio](https://intemstudio.github.io)에서 이어집니다.
+Steam 출시와 소규모 팀 개발 리드 경험을 바탕으로, 채용·협업을 위한 경력과 포트폴리오를 모아 둡니다.
+
+→ [경력 보기]({{ "/career/" | relative_url }}) · [포트폴리오 보기]({{ "/projects/" | relative_url }})
 
 ---
 
@@ -23,4 +24,4 @@ title: Home
 
 ## 연락
 
-채용·협업 문의: *(이메일 또는 원하는 채널)*
+채용·협업 문의: [monet5379@gmail.com](mailto:monet5379@gmail.com) · [GitHub](https://github.com/monet5379)

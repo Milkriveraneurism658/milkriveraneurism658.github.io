@@ -8,12 +8,10 @@ excerpt: "참여 프로젝트와 내 기여를 모아 둡니다."
 
 참여 프로젝트와 내 기여를 모아 둡니다.
 
-개별 상세는 `projects/<슬러그>.md`로 추가하고, 아래 목록에 한 줄씩 올립니다.
+타임라인·회사별 요약은 [경력]({{ "/career/" | relative_url }})을 참고하세요.
 
 ## 목록
 
-| 프로젝트 | 역할 | 한 줄 | 링크 |
-|----------|------|-------|------|
-| *(이름)* | *(역할)* | *(결과·기여)* | [상세]({{ "/projects/슬러그/" | relative_url }}) / 외부 |
-
-*(첫 항목을 채우기 전이면 이 표를 비우고 “준비 중” 한 줄만 둬도 됩니다.)*
+{% assign section_dir = "projects/" %}
+{% assign section_sort = "order" %}
+{% include section-index-list.html %}
