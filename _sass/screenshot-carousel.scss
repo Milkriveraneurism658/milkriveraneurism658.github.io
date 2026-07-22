@@ -1,0 +1,141 @@
+.shot-carousel {
+  margin: 1.5rem 0 2rem;
+}
+
+.shot-carousel__stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.shot-carousel__viewport {
+  position: relative;
+  overflow: hidden;
+  background: var(--grey-color-light);
+  aspect-ratio: 16 / 9;
+}
+
+.shot-carousel__slide {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+.shot-carousel__slide[hidden] {
+  display: none;
+}
+
+.shot-carousel__nav {
+  appearance: none;
+  border: 1px solid var(--grey-color-light);
+  background: var(--background-color);
+  color: var(--text-color);
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.shot-carousel__nav:hover,
+.shot-carousel__nav:focus-visible {
+  border-color: var(--grey-color);
+  outline: none;
+}
+
+.shot-carousel__nav:focus-visible {
+  box-shadow: 0 0 0 2px var(--brand-color);
+}
+
+.shot-carousel__thumbs {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+  overflow-x: auto;
+  padding-bottom: 0.15rem;
+  scrollbar-width: thin;
+}
+
+.shot-carousel__thumb {
+  appearance: none;
+  flex: 0 0 auto;
+  width: 5.5rem;
+  padding: 0;
+  border: 2px solid transparent;
+  background: var(--grey-color-light);
+  cursor: pointer;
+  border-radius: 2px;
+  line-height: 0;
+  opacity: 0.72;
+}
+
+.shot-carousel__thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.shot-carousel__thumb:hover,
+.shot-carousel__thumb:focus-visible {
+  opacity: 1;
+  outline: none;
+}
+
+.shot-carousel__thumb:focus-visible {
+  box-shadow: 0 0 0 2px var(--brand-color);
+}
+
+.shot-carousel__thumb.is-active {
+  border-color: var(--brand-color);
+  opacity: 1;
+}
+
+.shot-carousel__counter {
+  margin: 0.5rem 0 0;
+  text-align: center;
+  color: var(--grey-color);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 600px) {
+  .shot-carousel__stage {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "viewport"
+      "nav";
+  }
+
+  .shot-carousel__viewport {
+    grid-area: viewport;
+  }
+
+  .shot-carousel__nav--prev,
+  .shot-carousel__nav--next {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+    background: color-mix(in srgb, var(--background-color) 88%, transparent);
+  }
+
+  .shot-carousel__nav--prev {
+    left: 0.35rem;
+  }
+
+  .shot-carousel__nav--next {
+    right: 0.35rem;
+  }
+
+  .shot-carousel__thumb {
+    width: 4.5rem;
+  }
+}

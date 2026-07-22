@@ -1,0 +1,59 @@
+{% comment %}
+  slug: assets/images/projects/<slug>/ 폴더명 (필수)
+  title: alt용 제목 (기본: page.title)
+  ss-*.jpg|jpeg|png|webp 를 이름순으로 표시
+{% endcomment %}
+{% assign shot_slug = include.slug %}
+{% if shot_slug and shot_slug != "" %}
+{% assign shot_dir = "assets/images/projects/" | append: shot_slug | append: "/" %}
+{% assign shot_title = include.title | default: page.title | default: "스크린샷" %}
+{% assign shots = site.static_files
+  | where_exp: "f", "f.path contains shot_dir"
+  | where_exp: "f", "f.name contains 'ss-'"
+  | sort: "name" %}
+
+{% if shots.size > 0 %}
+<figure class="shot-carousel" data-shot-carousel aria-label="{{ shot_title | escape }} 스크린샷">
+  <div class="shot-carousel__stage">
+    <button type="button" class="shot-carousel__nav shot-carousel__nav--prev" data-shot-prev aria-label="이전 스크린샷">
+      <span aria-hidden="true">‹</span>
+    </button>
+    <div class="shot-carousel__viewport">
+      {% for shot in shots %}
+      <img
+        class="shot-carousel__slide{% if forloop.first %} is-active{% endif %}"
+        src="{{ shot.path | relative_url }}"
+        alt="{{ shot_title | escape }} 스크린샷 {{ forloop.index }}"
+        width="1920"
+        height="1080"
+        {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+        decoding="async"
+        data-shot-index="{{ forloop.index0 }}"
+        {% unless forloop.first %}hidden{% endunless %}>
+      {% endfor %}
+    </div>
+    <button type="button" class="shot-carousel__nav shot-carousel__nav--next" data-shot-next aria-label="다음 스크린샷">
+      <span aria-hidden="true">›</span>
+    </button>
+  </div>
+  {% if shots.size > 1 %}
+  <div class="shot-carousel__thumbs" role="tablist" aria-label="스크린샷 목록">
+    {% for shot in shots %}
+    <button
+      type="button"
+      class="shot-carousel__thumb{% if forloop.first %} is-active{% endif %}"
+      role="tab"
+      aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+      aria-label="스크린샷 {{ forloop.index }}"
+      data-shot-goto="{{ forloop.index0 }}">
+      <img src="{{ shot.path | relative_url }}" alt="" loading="lazy" decoding="async" width="160" height="90">
+    </button>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <figcaption class="shot-carousel__counter">
+    <span data-shot-current>1</span> / {{ shots.size }}
+  </figcaption>
+</figure>
+{% endif %}
+{% endif %}
