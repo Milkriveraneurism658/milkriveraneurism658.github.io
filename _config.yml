@@ -4,6 +4,10 @@ url: "https://monet5379.github.io"
 baseurl: ""
 timezone: Asia/Seoul
 
+author: 유승현
+email: monet5379@gmail.com
+github_username: monet5379
+
 markdown: kramdown
 theme: minima
 

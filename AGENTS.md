@@ -22,6 +22,8 @@
 - `career` · `projects` · `notes` 페이지: `date`, `excerpt` 필수. `title` 짧게, 부제(`—`) 금지. `excerpt` = 본문 lead
 - `projects/` · `notes/` 목록은 `_includes/section-index-list.html`로 자동 생성 (`index.md` 제외)
 - `projects` 상세: 목록용 `order`(작을수록 앞), `role` 권장
+- 프로젝트 이미지: `assets/images/projects/<슬러그>/` — `cover.jpg`, `ss-01.jpg`… (`docs/project-rules.md`)
+- 스크린샷 캐러셀: `{% include screenshot-carousel.html slug="<슬러그>" %}`
 - 요청 없이 커밋·push 하지 않음
 
 
